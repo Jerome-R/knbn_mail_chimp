@@ -1,0 +1,55 @@
+{# src/OC/PlatformBundle/Resources/views/layout.html.twig #}
+
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+  {{ "Campaigns"|trans }} - {{ parent() }}
+{% endblock %}
+
+{% block subheader %}
+{% endblock %}
+
+{% block body %}	
+
+	{# On définit un nouveau bloc, que les vues du bundle pourront remplir #}
+	{% block content %}
+
+		<h1>TEST PAGE</h1>
+
+		<h2>test opérations sur dates</h2>
+		<p>Date 1 :
+			{{date1|date("m/d/Y")}}
+		</p>
+		<p>Date 2 :
+			{{date2|date("m/d/Y")}}
+		</p>
+		<p>Date Diff :
+			{# dateDiff|date("%R%a") #}
+			{{ dateDiff - 15 }}
+		</p>
+		<h2>Test icon</h2>
+		<span class="fa-stack fa-lg">
+		  <i class="fa fa-shopping-bag fa-stack-1x"></i>
+		  <i class="fa fa-stack-1x text" style="color:white;font-size:10px; font-family: Arial; padding-top:3px">H</i>
+		</span>
+
+		{% set Draw = 90 %}
+		{% set Armour = 90 %}
+		{% set DR = Armour/(Armour + 10 * Draw) %}
+		{% set Dnet = Draw - Draw * DR %}
+
+		Domage brut : {{ Draw }}<br />
+		Armure : {{ Armour }}<br />
+		Facteur de reduction de dommage : {{ (DR * 100)|number_format(2,',',' ') }} %<br />
+		Domage net : {{ Dnet|number_format(2,',','') }}<br />
+
+		<h2>API MailChimp</h2>
+
+		{{dump(result)}}<br />
+
+		{{ date_test|date }}
+
+
+	{% endblock %}
+
+{% endblock %}

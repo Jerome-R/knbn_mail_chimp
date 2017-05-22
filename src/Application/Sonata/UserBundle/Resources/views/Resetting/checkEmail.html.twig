@@ -1,0 +1,28 @@
+{% extends "::layout.html.twig" %}
+
+{% block body %}
+	
+<div class="connection">
+    {% if invalid_username is defined %}
+        <div class="alert alert-danger">
+            <p style="color:white;">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
+        </div>
+    {% endif %}
+    {% if error is defined %}
+        <div class="alert alert-danger">{{ error|trans }}</div>
+    {% endif %}
+    <div class="login-block row">
+        {# Le formulaire, avec URL de soumission vers la route « login_check » comme on l'a vu #}
+        <div class="block col-md-10 col-md-offset-1 col-xs-12"> 
+            <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="form-inline col-xs-12">
+                <div class="form-group col-xs-10">
+                    <h2>Réinitialisation du mot de passe</h2>
+                    <p style="color:white;">
+		            	{{ 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle') }}
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>       
+</div>
+{% endblock %}

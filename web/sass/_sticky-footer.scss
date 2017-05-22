@@ -1,0 +1,26 @@
+html, body {
+  height: 100%;
+}
+#wrapper {
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: -82px; 
+  &:after {
+	  content: "";
+	  display: block;
+	}
+}
+
+.site-footer, #wrapper:after {
+  height: 82px; 
+}
+
+.site-footer {
+  background: $footer-bg-color;
+  color: $text-color-footer;
+
+  .inner-footer{
+    height:100%;
+    padding: 20px 0;
+  }
+}

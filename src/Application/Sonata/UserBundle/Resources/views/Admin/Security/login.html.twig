@@ -1,0 +1,52 @@
+{# src/OC/UserBundle/Resources/views/Security/login.html.twig #}
+
+{% extends "::layout.html.twig" %}
+
+{% block body %}
+    <div class="connection">
+        {% if error %}
+            <div class="alert alert-danger">{{ error|trans }}</div>
+        {% endif %}
+        <div class="login-block row">
+            {# Le formulaire, avec URL de soumission vers la route « login_check » comme on l'a vu #}
+            <div class="block col-md-10 col-md-offset-1 col-xs-12">      
+                <div class="col-md-4 col-xs-5 image-block">
+                    <img src="{{ asset('web/images/login_image2.png') }}" alt="" width="100%" />
+                </div>
+                <form action="{{ path('sonata_user_security_check') }}" method="post" class="form-inline col-md-8 col-xs-7">
+                    <div class="form-group col-xs-10">
+                        <h2>ACCES ADMIN</h2> 
+                    </div>
+                    
+                    <div class="form-group  col-xs-12 col-md-10">
+                        <label class="sr-only" for="exampleInputAmount">Nom d'utilisateur</label>
+                        <div class="input-group col-xs-12">
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
+                            <input type="text" class="form-control" id="username" name="_username" placeholder="Nom d'utilisateur">
+                        </div>
+                    </div>   
+                    <div class="form-group  col-xs-12 col-md-10">
+                        <label class="sr-only" for="exampleInputAmount">Mot de passe</label>
+                        <div class="input-group col-xs-12">
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
+                            <input type="password" id="password" name="_password" class="form-control" placeholder="Mot de passe"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group  col-xs-12 col-md-10 text-right">
+                    <label for="remember_me" class="control-label">
+                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                        {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+                    </label>
+                    <p>
+                        <a href="{{ path('fos_user_resetting_request') }}" style="color:white;">Réinitialiser mon mot de passe</a>
+                    </p>
+                    </div>
+                    <div class="form-group  col-xs-12 col-md-10">
+                        <input type="submit" class="btn btn-home-box-1 pull-right" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />                
+                    </div>
+                </form>
+            </div>
+        </div>       
+    </div>
+{% endblock body %}

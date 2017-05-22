@@ -1,0 +1,35 @@
+{# src/OC/PlatformBundle/Resources/views/layout.html.twig #}
+
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+  Clienteling - LANCEL PARIS
+{% endblock %}
+
+{% block imgNav %}
+	<a href="{{ path('app_home') }}"><img style="display:block; float:left;padding-right:20px;" src="{{ asset('web/images/logolancel.png') }}" alt="logo" height="50" /></a>
+{% endblock %}
+
+{#% block LpTopTitle %}
+    {% if is_granted("IS_AUTHENTICATED_ANONYMOUSLY") %}
+        {% if app.request.get('_route') == 'app_kpi_month' or app.request.get('_route') == 'app_kpi_ytd' or app.request.get('_route') == 'app_kpi_fid' or app.request.get('_route') == 'app_kpi_planning' %}
+            <ul class="nav navbar-nav {% if not is_granted("ROLE_ADMIN") %}navbar-right{% endif %}">
+                <li style="color:black;padding-top:3px;">
+                    <span style="font-size: 16px;">PERFORMANCES CRM {{ user.libelle }}</span><br />
+                    <span class="small">Rapport du mois {{ getMonthWording(month, "de ") }}</span>
+                </li>
+            </ul>
+        {% endif %}
+    {% endif %}
+{% endblock %#}
+
+{% block subheader %}
+{% endblock %}
+
+{% block body %}	
+
+	{# On définit un nouveau bloc, que les vues du bundle pourront remplir #}
+	{% block content %}
+	{% endblock %}
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{# src/OC/PlatformBundle/Resources/views/layout.html.twig #}
+
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+  Changer d'utilisateur - {{ parent() }}
+{% endblock %}
+
+{% block subheader %}
+{% endblock %}
+
+{% block body %}	
+
+	{# On définit un nouveau bloc, que les vues du bundle pourront remplir #}
+	{% block content %}
+		<h1>Listes des utilisateurs</h1>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Username</th>
+					<th>Libéllé</th>
+					<th>Email</th>
+					<th>Directeur</th>
+					<th>RM</th>
+					<th>Role</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for user_lncl in users %}
+					{% if loop.index0 > 0 %}
+					<tr>
+						<td>{{ user_lncl.username }}</td>
+						<td>{{ user_lncl.libelle }}</td>
+						<td>{{ user_lncl.email }}</td>
+						<td>{{ user_lncl.directeur }}</td>
+						<td>{{ user_lncl.retailManager }}</td>
+						<td>{{ user_lncl.role }}</td>
+						<td><a href="{{ path("app_home", {'_switch_user': user_lncl.username}) }}">Connection</a></td>
+					</tr>
+					{% endif %}
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endblock %}
+
+{% endblock %}

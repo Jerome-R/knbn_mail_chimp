@@ -1,0 +1,166 @@
+{# app/Resources/views/layout.html.twig #}
+
+{# Global variables #}
+
+{% if not is_granted("ROLE_USER") %}
+    {# If not connected (LP) #}
+    {% set modules = "" %}
+{% elseif is_granted("ROLE_USER") %}
+    {# If connected (LNCL) #}
+    {% if user is not defined %}{% set user = app.user %}{% endif %}
+{% endif %}
+{% set previous_page = app.request.headers.get('referer') %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="https://www.lancel.com/skin/frontend/eplatform/lancel/favicon.ico" type="image/x-icon">
+
+    <title>{% block title %}Clienteling - LANCEL PARIS{% endblock %}</title>
+
+    {% block stylesheets %}
+        {# On charge le CSS de bootstrap depuis le site directement #}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+        {% stylesheets
+            filter="cssrewrite,compass"
+            output="css/all.css"
+            "sass/main.scss"
+        %}
+            <link rel="stylesheet" href="{{ asset_url }}">
+            <link rel="stylesheet" href="{{ asset('web/css/font-awesome.min.css') }}">
+            <!--link rel="stylesheet" href="{{ asset('web/css/all.css') }}"-->
+            <link rel="stylesheet" href="{{ asset('web/css/jquery.multiselect.css') }}">
+        {% endstylesheets %}
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('web/css/datatables.min.css') }}"/>
+
+        <script src="{{ asset('web/js/ckeditor/ckeditor.js') }}"></script>
+        <script type="text/javascript">
+            CKEDITOR.timestamp='ABCD';
+        </script>                
+    {% endblock %}
+</head>
+
+<body 
+    {% if app.request.get('_route') in ['fos_user_security_login','sonata_user_admin_security_login','fos_user_resetting_request','fos_user_resetting_send_email','fos_user_resetting_reset', 'fos_user_resetting_check_email']  %}
+        class="green"
+    {% endif %}
+    >
+    <div id="wrapper" class="container">        
+        <header class="nav-wrap">
+            <nav class="main-menu {% if app.request.attributes.get('_route') in ['app_top_client_index','app_top_client_view','app_top_client_sortant'] %}orange{% endif %}{% if app.request.attributes.get('_route') in [ 'app_kpi_month_locaux','app_kpi_month_nlocaux','app_kpi_ytd_locaux','app_kpi_ytd_nlocaux', 'app_kpi_trigger', 'app_kpi_top_boutiques'] %}gris{% endif %}">
+                <div class="container">
+                    <ul class="nav navbar-nav">
+                        {% block imgNav %}{% endblock %}
+                    </ul>
+                    {% block LpTopTitle %}{% endblock %}
+                    {% if is_granted("ROLE_BOUTIQUE") %}
+                        <ul class="nav navbar-nav navbar-right hidden-print">
+                            {% if app.request.attributes.get('_route') != 'app_home' %}
+                                <li class="{% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}"><a href="{{ path('app_home') }}">{{"Home"|trans}}<span class="sr-only">(current)</span></a></li>
+                            {% endif %}
+                            {% if is_granted("ROLE_BOUTIQUE") and app.request.attributes.get('_route') != 'app_home' %}
+                                <li class="{% if app.request.attributes.get('_route') in ['app_campaigns_index','app_campaign_clients_list','app_campaign_client','app_campaign_send_email'] %}active{% endif %}"><a href="{{ path('app_campaigns_index') }}">{{"My campaigns"|trans}}</a></li>
+                            {% endif %}
+                            {% if is_granted("ROLE_BOUTIQUE") and app.request.attributes.get('_route') != 'app_home' %}
+                                <li class="{% if app.request.attributes.get('_route') in ['app_top_client_index','app_top_client_view','app_top_client_sortant'] %}active{% endif %}"><a href="{{ path('app_top_client_index') }}">{{"My top clients"|trans}}</a></li>
+                            {% endif %}
+                            {% if is_granted("ROLE_DIRECTEUR") and app.request.attributes.get('_route') != 'app_home' %}
+                                <li class="{% if app.request.attributes.get('_route') in ['app_kpi_month_locaux','app_kpi_ytd_locaux','app_kpi_month_nlocaux','app_kpi_ytd_nlocaux','app_kpi_trigger', 'app_kpi_top_boutique'] %}active{% endif %}"><a href="{{ path('app_kpi_month_locaux') }}">{{"My KPIs"|trans}}</a></li>
+                            {% endif %}
+                            {% if is_granted("ROLE_BOUTIQUE") %}
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="text-center"><span class="small">Bonjour {{ app.user.libelle }}</span></li>
+                                        {% if is_granted('ROLE_SIEGE') %}
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="{{ path('app_log_export') }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> Historique des exports</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="{{ path('app_tracking') }}"><i class="fa fa-bar-chart" aria-hidden="true"></i> Tracking</a></li>
+                                        {% endif %}
+                                        {% if is_granted("ROLE_SONATA_ADMIN") %}
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="{{ path('app_monitor') }}"><i class="fa fa-wrench" aria-hidden="true"></i> Monitoring</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="{{ path('app_bounce') }}"><i class="fa fa-inbox" aria-hidden="true"></i> Bounces</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="{{ path('sonata_admin_dashboard') }}"><i class="fa fa-database" aria-hidden="true"></i> Back office</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="{{ path('app_impersonate') }}"><i class="fa fa-users" aria-hidden="true"></i> Changer de compte</a></li>
+                                        {% endif %}
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-cog" aria-hidden="true"></i> Gérer mon compte</a></li>
+                                        {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="{{ path('app_home', {'_switch_user': '_exit'}) }}"><i class="fa fa-user-times" aria-hidden="true"></i> Retour admin</a></li>
+                                        {% endif %}
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-lock" aria-hidden="true"></i> {{"Logout"|trans}}</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <li><a href="{{ path('fos_user_security_login') }}"><i class="fa fa-unlock" aria-hidden="true"></i> {{"Login"|trans}}</a></li>
+                            {% endif %}
+                        </ul>                        
+                    {% endif %}
+                </div><!-- /.container-fluid -->
+            </nav>
+            <div class="spacer"></div>
+            {% block subheader %}
+            {% endblock %}
+
+        </header>
+        <div class="spacer header"></div>
+        <div class="row">
+            <div id="content" class="col-xs-12">
+                {% include 'SonataCoreBundle:FlashMessage:render.html.twig' %}
+                {#% for label, flashMessages in app.session.flashbag.all %}
+                    {% for flashMessage in flashMessages %}
+                        <div class="alert alert-{{ label }}">
+                            {{ flashMessage }}
+                        </div>
+                    {% endfor %}
+                {% endfor %#}
+                {% block body %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer text-center hidden-print">
+        <div class="inner-footer">
+            {{"Claravista, all right reserved"|trans}} © {{ 'now'|date('Y') }}
+        </div>
+    </footer>
+
+    {% block javascripts %}
+        {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <script src="{{ asset('web/js/canvasJs/canvasjs.min.js') }}"></script>
+        <script src="{{ asset('web/js/jquery.multiselect.js') }}"></script>
+        <script src="{{ asset('web/js/gauge/gauge.js') }}"></script>
+    
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-84548333-1', 'auto');
+          ga('send', 'pageview');
+
+        </script>
+    {% endblock %}
+
+    {% block canvasJs %}
+    {% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: fos/fos.yml }
+    - { resource: sonata/sonata.yml }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: fr
+    sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\UserAdmin
+    local_ip: 127.0.0.1
+    maintenance: false #turn it to true to enable maintenance
+    underMaintenanceUntil: 01/09 - 12H00 environ
+
+framework:
+    #esi:             ~
+    translator:      { fallbacks: ["%locale%"] }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        # handler_id set to null will use default session handler from php.ini
+        handler_id:  ~
+    fragments:       ~
+    http_method_override: true
+
+mopa_bootstrap:
+    form:
+        render_optional_text: false
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    form:
+        #Bug for displaying some stuff in sonata
+        #resources: ['bootstrap_3_horizontal_layout.html.twig']
+        resources: ~
+
+# Stof\DoctrineExtensionsBundle configuration
+stof_doctrine_extensions:
+    orm:
+        default:
+            sluggable: true
+            timestampable: true
+
+# Assetic Configuration
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: 
+    bundles:        [ ]
+    #java: /usr/bin/java
+    filters:
+        cssrewrite: ~
+        #For SASS & Compass, install Ruby 1st then
+        #gem install sass
+        #gem install compass
+        #Add path of bin
+        #php app/console assetic:watch
+        #php app/console assetic:dump --env=prod --no-debug
+        #In vendor krisswallsmith -> CompassFilter.php
+        #chancge line 312 $pb->add('--sass-dir')->add('')->add('--css-dir')->add('');
+        #to $pb->add('--sass-dir')->add($tempDir)->add('--css-dir')->add($tempDir);
+        sass:
+            bin: C:\Ruby22-x64\bin\sass
+        compass:
+            bin: C:\Ruby22-x64\bin\compass
+
+#KNP Paginator
+knp_paginator:
+    page_range: 5                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: KnpPaginatorBundle:Pagination:sliding.html.twig     # sliding pagination controls template
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
+
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                driver:   pdo_mysql
+                host:     "%database_host%"
+                port:     "%database_port%"
+                dbname:   "%database_name%"
+                user:     "%database_user%"
+                password: "%database_password%"
+                charset:  UTF8
+            tracking:
+                driver:   pdo_mysql
+                host:     "%database_tracking_host%"
+                port:     "%database_tracking_port%"
+                dbname:   "%database_tracking_name%"
+                user:     "%database_tracking_user%"
+                password: "%database_tracking_password%"
+                charset:  UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #     path:     "%database_path%"
+        types:
+            json: Sonata\Doctrine\Types\JsonType
+    orm:
+        default_entity_manager: default
+        auto_generate_proxy_classes: "%kernel.debug%"
+        entity_managers:
+            default:
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                connection: default
+                mappings:
+                    AppBundle: ~
+                dql:
+                    string_functions:
+                        GROUP_CONCAT: AppBundle\Doctrine\Mysql\GroupConcat
+            tracking:
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                connection: tracking
+                mappings:
+                    AppTrackingBundle: ~
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport:  "%mailer_transport%"
+    host:       "%mailer_host%"
+    username:   "%mailer_user%"
+    password:   "%mailer_password%"
+    port:       587
+    encryption: tls
+    #auth_mode:  login
+    spool:      { type: memory }

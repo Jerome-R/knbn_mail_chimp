@@ -1,0 +1,39 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "::layout.html.twig" %}
+
+{% block subheader %}
+    {% include 'AppBundle:Commons:subheader.html.twig' with {'ariane': '<a href="'~ path("fos_user_profile_show") ~'">Gérer mon compte</a>' } %}
+{% endblock %}
+
+{% block imgNav %}
+    <a href="{{ path('app_home') }}"><img style="display:block; float:left;padding-right:20px;" src="{{ asset('web/images/logolancel.png') }}" alt="logo" height="50" /></a>
+{% endblock %}
+
+{% block body %}
+
+    <!--div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ "title_user_account" | trans({}, 'SonataUserBundle')}}</h3>
+        </div>
+        <div class="panel-body">
+            <form action="{{ path('sonata_user_profile_edit') }}" method="POST" class="form-horizontal">
+                {{ form_widget(form) }}
+                <div class="form-actions">
+                    <button type="submit" name="submit"  class="btn btn-primary pull-right">{{ 'sonata_user_submit'|trans({}, 'SonataUserBundle') }}</button>
+                </div>
+            </form>
+        </div>
+    </div--><br />
+
+    {% render url("sonata_user_profile_edit_authentication") %}
+{% endblock %}

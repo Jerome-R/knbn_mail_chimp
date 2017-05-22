@@ -1,0 +1,164 @@
+.nav-wrap{
+	background-color: $nav-bg-color;
+	position: absolute;
+    left: 0;
+	width:100%;
+	max-height: 115px;
+}
+
+nav.main-menu{
+	background-color: $nav-bg-color;
+	height: 50px;
+	border: 0;
+	margin-bottom: 0;
+
+	ul{
+		background-color: $nav-bg-color;
+		li{			
+			color:$nav-inactive-text-color;
+			font-weight: bold;
+			font-size: 14px;
+			a{
+				color: $nav-inactive-text-color;
+				&:hover{
+					background-color: $nav-hover-bg-color !important;
+					color: white !important;
+				}
+			}
+		}
+		li.active{
+			background-color:$nav-active-bg-color;
+			a{
+				color: $nav-active-text-color;
+			}
+		}
+	}
+
+
+	&.orange{
+		background-color: $nav-bg-color;
+		ul{
+			background-color: $nav-bg-color;
+			li{			
+				a{
+					&:hover{
+						background-color: $nav-hover-bg-color-2 !important;
+					}
+				}
+			}
+			li.active{
+				background-color:$nav-active-bg-color-2;
+			}
+		}
+	}
+
+	&.gris{
+		background-color: $nav-bg-color;
+		ul{
+			background-color: $nav-bg-color;
+			li{			
+				a{
+					&:hover{
+						background-color: $nav-hover-bg-color-3 !important;
+					}
+				}
+			}
+			li.active{
+				background-color:$nav-active-bg-color-3;
+			}
+		}
+	}
+}
+nav.sub-menu{
+	background-color: $nav-active-bg !important;
+	height: 65px;
+	line-height: 65px;
+	color: $sub-nav-text-color;
+	border-radius: 0;
+	margin-bottom:0;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	-o-border-radius: 0px;
+	&.orange{
+		background-color: $nav-active-orange-bg !important;
+	}
+	&.gris{
+		background-color: $nav-active-bg-color-3 !important;
+		&.kpi-menu{
+			ul{
+				li{	
+					a{
+						&:hover, &:focus, &:active {
+							background-color: $nav-hover-bg-color-3 !important;
+						}
+					}
+				}
+			}
+		}
+
+	}
+	span{
+		font-size:26px;
+	}
+	a{ 
+
+		color:$sub-nav-text-color;
+		&:hover, &:focus, &:active{			
+			text-decoration: underline;
+		}
+	}
+	&.kpi-menu{
+		border: 0;
+		ul{
+			li{	
+				padding: 0 !important;		
+				color:$sub-nav-text-color;
+				font-weight: bold;
+				text-transform: uppercase;
+				a{
+					display:block;
+					height: 65px;
+					line-height: 16px !important;
+					color: $sub-nav-text-color;
+					&:hover, &:focus, &:active {
+						background-color: $nav-hover-bg-color !important;
+						color: white !important;
+					}
+					&.one-line{
+						padding-top: 22px !important;
+					}
+				}
+			}
+			li.active{
+				background-color:white;
+				a{
+					color: black;
+				}
+			}
+		}
+	}
+}
+
+/*Disable nav collapse*/
+
+.navbar-collapse.collapse {
+display: block!important;
+}
+
+.navbar-nav>li, .navbar-nav {
+float: left !important;
+margin:0 !important;
+}
+
+.navbar-nav.navbar-right:last-child {
+margin-right: -15px !important;
+}
+
+.navbar-right {
+float: right!important;
+}
+
+.navbar-nav>li>a {
+	padding-top: 15px !important;
+	padding-bottom: 15px !important;
+}

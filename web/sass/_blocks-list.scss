@@ -1,0 +1,86 @@
+.list-block{
+	padding:15px 20px 10px 15px;
+
+
+	span.list-campaign-name{
+		font-weight: bold;
+		font-size: 22px;
+	}
+
+	h2:first-child, h3:first-child, p:first-child{
+		margin: 0;
+	}
+	.data, .channel, .action, .field{
+		padding-top: 10px;
+	}
+
+	.action{
+		padding-top: 15px;
+		text-align: center;
+	}
+
+	.channel{
+		text-align: center;
+	}
+}
+
+div.campaign-block-list{
+
+	&:first-child{
+		margin-top:40px;
+	}
+
+	@extend .list-block;
+
+	border: 1px solid $border-content-color;
+	background: $content-bg-color;	
+
+	margin-top: 10px;
+	margin-bottom: 10px;
+
+}
+
+div.client-block-title{
+
+	@extend .list-block;
+
+	color: $text-color-highlight;
+
+	h2{
+		font-size:18px;
+		color: $text-color;
+	}
+
+	margin-top: 25px;
+
+}
+
+div.client-block{
+
+	@extend .list-block;
+
+	margin-bottom: 25px;
+
+	border: 1px solid $border-content-color;
+	background: $content-bg-color;
+	padding: 35px;
+
+	.field{
+		text-align: right;
+		font-weight: bold;
+
+		li.list-group-item{
+			border: 0;
+		}
+	}
+	.data{
+		li.list-group-item{
+			border-top: 0;
+			border-left: 0;
+			border-right: 0;
+			border-bottom: 1px solid $border-content-color;
+			background:none;
+		}
+	}
+
+}

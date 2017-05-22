@@ -1,0 +1,35 @@
+{% extends 'SonataBlockBundle:Block:block_base.html.twig' %}
+
+{% block block %}
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">CSV-Import</h3>
+    </div>
+    <div class="box-body">
+        <form action="{{ path('sonata_import_CSV') }}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <select size="1" name="fileType" id="disabledSelect" class="form-control">
+                    {% for oneCSV in allTypes %}
+                        <option value="{{ oneCSV.id }}">{{ oneCSV.title }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="csvFile">Separator</label>
+                <select size="1" name="separator" id="disabledSelect2" class="form-control col-md-2">
+                    <option value=";">;</option>
+                    <option value=",">,</option>
+                    <option value="|">|</option>                
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="csvFile">File input</label>
+                <input type="file" id="csvFile" name="csvFile">
+                <p class="help-block">Import file to BDD.</p>
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <input type="submit" class="btn btn-primary" value="Upload" />
+        </form>
+    </div>
+</div>
+{% endblock %}

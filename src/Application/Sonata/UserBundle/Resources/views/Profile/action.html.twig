@@ -1,0 +1,49 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+
+
+{% extends "::layout.html.twig" %}
+
+{% block subheader %}
+    {% include 'AppBundle:Commons:subheader.html.twig' with {'ariane': '<a href="'~ path("fos_user_profile_show") ~'">Gérer mon compte</a>' } %}
+{% endblock %}
+
+{% block imgNav %}
+    <a href="{{ path('app_home') }}"><img style="display:block; float:left;padding-right:20px;" src="{{ asset('web/images/logolancel.png') }}" alt="logo" height="50" /></a>
+{% endblock %}
+
+{% block body %}
+    <div class="col-md-10 col-md-offset-1 col-xs-12">        
+
+        <div class="col-md-4 col-xs-12">
+            <h2>Gérer mon compte</h2>
+            {% block sonata_profile_menu %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="/profile/edit-profile" class="list-group-item ">Mes informations de connexion</a>
+                {% endif %}
+                <a href="/profile/change-password" class="list-group-item ">Modifier mon mot de passe</a>
+            {% endblock %}
+        </div>
+
+        <div class="col-md-8 col-xs-12">
+            <h2>Informations complémentaires</h2>
+            {% if app.user.credentialsExpireAt is not null %}
+                <p class="bg-warning text-warning" style="padding: 10px;">Expiration de mon mot de passe le : {{ app.user.credentialsExpireAt|date('d/m/Y') }}</p>
+            {% else %}
+                <p class="bg-danger text-danger" style="padding: 10px;">Votre mot de passe doit être modifié.</p>
+            {% endif %}
+            {% include 'SonataCoreBundle:FlashMessage:render.html.twig' %}
+            {% block sonata_profile_content '' %}
+        </div>
+    </div>
+
+{% endblock %}

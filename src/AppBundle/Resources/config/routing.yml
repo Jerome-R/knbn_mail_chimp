@@ -1,0 +1,114 @@
+# src/OC/PlatformBundle/Resources/config/routing.yml
+
+app_home:
+    path:      /home
+    defaults:  { _controller: AppBundle:Home:index}
+
+app_test:
+    path:      /_test
+    defaults:  { _controller: AppBundle:Home:_test}
+
+app_bounce:
+    path:      /_bounce
+    defaults:  { _controller: AppBundle:Home:_bounce}
+
+app_tracking:
+    path:      /_tracking
+    defaults:  { _controller: AppBundle:Home:_tracking}
+
+app_monitor:
+    path:      /_monitor/{page}
+    defaults:  { _controller: AppBundle:Home:_monitor, page: 1}
+
+app_impersonate:
+    path:      /_impersonate
+    defaults:  { _controller: AppBundle:Home:_impersonate}
+
+app_test_ouverture:
+    path:      /_open/{idClient}
+    defaults:  { _controller: AppBundle:Home:_open}
+
+app_campaigns_index:
+    path:      /campaigns
+    defaults:  { _controller: AppBundle:Campaign:index}
+
+app_campaign_clients_list:
+    path:      /campaign_clients_list/{campaign_id}
+    defaults:  { _controller: AppBundle:Campaign:viewCampaignClientsList}
+
+app_campaign_client:
+    path:      /campaign_client/{campaign_id}/{client_id}
+    defaults:  { _controller: AppBundle:Campaign:viewCampaignClient}
+
+app_campaign_send_email:
+    path:      /campaign_send_email/{recipient_id}
+    defaults:  { _controller: AppBundle:Campaign:CampaignSendEmail}
+
+app_campaign_validate_email:
+    path:      /campaign_validate_email/{recipient_id}
+    defaults:  { _controller: AppBundle:Campaign:CampaignValidateEmail}
+
+app_preview_email:
+    path:      /campaign_preview_email
+    defaults:  { _controller: AppBundle:Campaign:PreviewEmail}
+
+app_top_client_index:
+    path:      /top_clients
+    defaults:  { _controller: AppBundle:TopClient:index}
+
+app_top_client_sortant:
+    path:      /archives_top_clients
+    defaults:  { _controller: AppBundle:TopClient:topClientSortant}
+
+app_top_client_view:
+    path:      /top_clients_view/{top_client_id}
+    defaults:  { _controller: AppBundle:TopClient:viewTopClient}
+
+app_top_client_remove_comment:
+    path:      /clients_remove_comment/{client_comment_id}
+    defaults:  { _controller: AppBundle:TopClient:deleteComment}
+
+app_kpi_month_locaux:
+    path:      /kpi_ml
+    defaults:  { _controller: AppBundle:Kpi:monthLocaux}
+
+app_kpi_ytd_locaux:
+    path:      /kpi_ytdl
+    defaults:  { _controller: AppBundle:Kpi:ytdLocaux}
+
+app_kpi_month_nlocaux:
+    path:      /kpi_mnl
+    defaults:  { _controller: AppBundle:Kpi:monthNonLocaux}
+
+app_kpi_ytd_nlocaux:
+    path:      /kpi_ytdnl
+    defaults:  { _controller: AppBundle:Kpi:ytdNonLocaux}
+
+app_kpi_trigger:
+    path:      /kpi_trigger
+    defaults:  { _controller: AppBundle:Kpi:trigger}
+
+app_kpi_top_boutiques:
+    path:      /kpi_top_boutiques
+    defaults:  { _controller: AppBundle:Kpi:topBoutique}
+
+app_log_export:
+    path:      /log_export
+    defaults:  { _controller: AppBundle:Home:logExport}
+
+app_doublons_suspects_list:
+    path:      /doublons_suspects
+    defaults:  { _controller: AppBundle:Doublons:index}
+
+
+app_not_found:
+    path:      /not_found
+    defaults:  { _controller: AppBundle:Home:notFound}
+
+# redirecting the root
+root:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /home
+        permanent: true

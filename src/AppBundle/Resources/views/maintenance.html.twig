@@ -1,0 +1,23 @@
+{# src/OC/PlatformBundle/Resources/views/layout.html.twig #}
+
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+  Maintenance en cours
+{% endblock %}
+
+{% block subheader %}
+{% endblock %}
+
+{% block body %}	
+
+	{# On définit un nouveau bloc, que les vues du bundle pourront remplir #}
+	{% block content %}
+		<h1>Maintenance en cours</h1>
+
+		<p>
+			La maintenance aura lieu jusqu'au : {{maintenanceUntil}}.
+		</p>
+	{% endblock %}
+
+{% endblock %}
