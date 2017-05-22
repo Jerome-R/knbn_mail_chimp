@@ -1,0 +1,10 @@
+
+<nav class="navbar sub-menu{% if app.request.get('_route') in ['app_top_client_index','app_top_client_view','app_top_client_sortant'] %} orange{% endif %}{% if app.request.get('_route') in ['app_kpi_month_locaux','app_kpi_month_nlocaux','app_kpi_ytd_locaux','app_kpi_ytd_nlocaux','app_kpi_trigger'] %}gris{% endif %}">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<span>{{ ariane|raw }}</span>
+			</div>
+		</div>
+	</div>
+</nav>

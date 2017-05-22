@@ -16,9 +16,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="https://www.lancel.com/skin/frontend/eplatform/lancel/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="" type="image/x-icon">
 
-    <title>{% block title %}Clienteling - LANCEL PARIS{% endblock %}</title>
+    <title>{% block title %}Konbini - MailChimp Interface{% endblock %}</title>
 
     {% block stylesheets %}
         {# On charge le CSS de bootstrap depuis le site directement #}
@@ -78,17 +78,7 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li class="text-center"><span class="small">Bonjour {{ app.user.libelle }}</span></li>
-                                        {% if is_granted('ROLE_SIEGE') %}
-                                            <li role="separator" class="divider"></li>
-                                            <li><a href="{{ path('app_log_export') }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> Historique des exports</a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li><a href="{{ path('app_tracking') }}"><i class="fa fa-bar-chart" aria-hidden="true"></i> Tracking</a></li>
-                                        {% endif %}
                                         {% if is_granted("ROLE_SONATA_ADMIN") %}
-                                            <li role="separator" class="divider"></li>
-                                            <li><a href="{{ path('app_monitor') }}"><i class="fa fa-wrench" aria-hidden="true"></i> Monitoring</a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li><a href="{{ path('app_bounce') }}"><i class="fa fa-inbox" aria-hidden="true"></i> Bounces</a></li>
                                             <li role="separator" class="divider"></li>
                                             <li><a href="{{ path('sonata_admin_dashboard') }}"><i class="fa fa-database" aria-hidden="true"></i> Back office</a></li>
                                             <li role="separator" class="divider"></li>

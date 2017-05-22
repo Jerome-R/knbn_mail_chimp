@@ -64,42 +64,6 @@ class User extends BaseUser
     protected $webMail;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\KpiCapture", mappedBy="user")
-     */
-    private $kpiCaptures;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\KpiTrigger", mappedBy="user")
-     */
-    private $kpiTriggers;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Recipient", mappedBy="user")
-     */
-    private $recipients;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Client", mappedBy="userTrigger")
-     */
-    private $clientsTriggers;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Client", mappedBy="userTopclient")
-     */
-    private $topclients;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ClientSuspectDoublon", mappedBy="user")
-     */
-    private $doublonSuspects;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserModule", mappedBy="user")
-     * @ORM\JoinTable(name="app_user_module")
-     */
-    private $userModules;
-
-    /**
      * @var string $signature
      *
      * @ORM\Column(name="signature", type="string", length=255, nullable=true)
@@ -107,53 +71,11 @@ class User extends BaseUser
     protected $signature;
 
     /**
-     * @var string $store
-     *
-     * @ORM\Column(name="store", type="string", length=255, nullable=true)
-     */
-    protected $store;
-
-    /**
-     * @var string $libelle
-     *
-     * @ORM\Column(name="libelle", type="string", length=255, nullable=true)
-     */
-    protected $libelle;
-
-    /**
-     * @var string $directeur
-     *
-     * @ORM\Column(name="directeur", type="string", length=255, nullable=true)
-     */
-    protected $directeur;
-
-    /**
-     * @var string $retailManager
-     *
-     * @ORM\Column(name="retail_manager", type="string", length=255, nullable=true)
-     */
-    protected $retailManager;
-
-    /**
-     * @var string $brand
-     *
-     * @ORM\Column(name="brand", type="string", length=100, nullable=true)
-     */
-    protected $brand ;
-
-    /**
      * @var string $role
      *
      * @ORM\Column(name="role", type="string", length=100, nullable=true)
      */
     protected $role ;
-
-    /**
-     * @var string $role
-     *
-     * @ORM\Column(name="email_reply", type="string", length=150, nullable=true)
-     */
-    protected $emailReply ;
 
     /**
      * @var string $is_email_credential_expirate_sent
@@ -172,19 +94,10 @@ class User extends BaseUser
 
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct();      
 
-        $this->kpiCaptures              = new ArrayCollection();
-        $this->kpiTriggers              = new ArrayCollection();
-        $this->userModules              = new ArrayCollection();
-        $this->recipients               = new ArrayCollection();
-        $this->clientsTrigger           = new ArrayCollection();
-        $this->topclients               = new ArrayCollection();
-        $this->doublonSuspects          = new ArrayCollection();
-        $this->store                    = "";
-        $this->directeur                = "";
-        $this->retailManager            = "";
-        $this->brand                    = "";
+        $this->signature                = "";
+        $this->webMail                  = "";
         $this->role                     = "";
         $this->authenticationFailure    = 0;
         $this->emailReply               = null;
@@ -259,28 +172,6 @@ class User extends BaseUser
         return $this;
     }
 
-    /**
-     * Get libelle
-     *
-     * @return int $libelle
-     */
-    public function getLibelle()
-    {
-        return $this->libelle;
-    }
-
-    /**
-     * Set libelle
-     *
-     * @param string $libelle
-     *
-     * @return User
-     */
-    public function setLibelle($libelle)
-    {
-        $this->libelle = $libelle;
-        return $this;
-    }
 
     /**
      * Get signature
@@ -306,121 +197,6 @@ class User extends BaseUser
     }
 
     /**
-     * Get directeur
-     *
-     * @return int $directeur
-     */
-    public function getDirecteur()
-    {
-        return $this->directeur;
-    }
-
-    /**
-     * Set directeur
-     *
-     * @param string $directeur
-     *
-     * @return User
-     */
-    public function setDirecteur($directeur)
-    {
-        $this->directeur = $directeur;
-        return $this;
-    }
-
-    /**
-     * Get store
-     *
-     * @return int $store
-     */
-    public function getStore()
-    {
-        return $this->store;
-    }
-
-    /**
-     * Set store
-     *
-     * @param string $store
-     *
-     * @return User
-     */
-    public function setStore($store)
-    {
-        $this->store = $store;
-        return $this;
-    }
-
-    /**
-     * Get retailManager
-     *
-     * @return int $retailManager
-     */
-    public function getRetailManager()
-    {
-        return $this->retailManager;
-    }
-
-    /**
-     * Set retailManager
-     *
-     * @param string $retailManager
-     *
-     * @return User
-     */
-    public function setRetailManager($retailManager)
-    {
-        $this->retailManager = $retailManager;
-        return $this;
-    }
-
-    /**
-     * Get brand
-     *
-     * @return int $brand
-     */
-    public function getBrand()
-    {
-        return $this->brand;
-    }
-
-    /**
-     * Set brand
-     *
-     * @param string $brand
-     *
-     * @return User
-     */
-    public function setBrand($brand)
-    {
-        $this->brand = $brand;
-        return $this;
-    }
-
-    /**
-     * Get role
-     *
-     * @return int $role
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * Set role
-     *
-     * @param string $role
-     *
-     * @return User
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
-        return $this;
-    }
-
-    /**
      * Get isEmailCredentialExpiredSent
      *
      * @return int $isEmailCredentialExpiredSent
@@ -441,185 +217,6 @@ class User extends BaseUser
     {
         $this->isEmailCredentialExpiredSent = $isEmailCredentialExpiredSent;
         return $this;
-    }
-
-    /**
-     * Get emailReply
-     *
-     * @return int $emailReply
-     */
-    public function getEmailReply()
-    {
-        return $this->emailReply;
-    }
-
-    /**
-     * Set emailReply
-     *
-     * @param string $emailReply
-     *
-     * @return User
-     */
-    public function setEmailReply($emailReply)
-    {
-        $this->emailReply = $emailReply;
-        return $this;
-    }
-
-    /**
-     * add kpiCapture
-     * remove kpiCapture
-     * get kpiCaptures
-     *
-     * @param KpiCaptures $kpiCapture
-     *
-     * @return User
-     */
-    public function addKpiCapture(KpiCapture $kpiCapture)
-    {
-        $this->kpiCaptures[] = $kpiCapture;
-
-        return $this;
-    }
-
-    public function removeKpiCapture(KpiCapture $kpiCapture)
-    {
-        $this->kpiCaptures->removeElement($kpiCapture);
-    }
-
-    public function getKpiCaptures()
-    {
-        return $this->kpiCaptures;
-    }
-
-    /**
-     * add topclient
-     * remove topclient
-     * get topclients
-     *
-     * @param Client $topclient
-     *
-     * @return User
-     */
-    public function addTopclient(Client $topclient)
-    {
-        $this->topclients[] = $topclient;
-
-        return $this;
-    }
-
-    public function removeTopclient(Client $topclient)
-    {
-        $this->topclients->removeElement($topclient);
-    }
-
-    public function getTopclients()
-    {
-        return $this->topclients;
-    }
-
-    /**
-     * add doublonSuspect
-     * remove doublonSuspect
-     * get doublonSuspects
-     *
-     * @param Client $doublonSuspect
-     *
-     * @return User
-     */
-    public function addDoublonSuspect(Client $doublonSuspect)
-    {
-        $this->doublonSuspects[] = $doublonSuspect;
-
-        return $this;
-    }
-
-    public function removeDoublonSuspect(Client $doublonSuspect)
-    {
-        $this->doublonSuspects->removeElement($doublonSuspect);
-    }
-
-    public function getDoublonSuspects()
-    {
-        return $this->doublonSuspects;
-    }
-
-    /**
-     * add clientsTrigger
-     * remove clientsTrigger
-     * get clientsTriggers
-     *
-     * @param Client $clientsTrigger
-     *
-     * @return User
-     */
-    public function addClientTrigger(Client $clientsTrigger)
-    {
-        $this->clientsTriggers[] = $clientsTrigger;
-
-        return $this;
-    }
-
-    public function removeClientTrigger(Client $clientsTrigger)
-    {
-        $this->clientsTriggers->removeElement($clientsTrigger);
-    }
-
-    public function getClientTriggers()
-    {
-        return $this->clientsTriggers;
-    }
-
-    /**
-     * add kpiTrigger
-     * remove kpiTrigger
-     * get kpiTriggers
-     *
-     * @param KpiCaptures $kpiTrigger
-     *
-     * @return User
-     */
-    public function addKpiTrigger(KpiTrigger $kpiTrigger)
-    {
-        $this->kpiTriggers[] = $kpiTrigger;
-
-        return $this;
-    }
-
-    public function removeKpiTrigger(KpiTrigger $kpiTrigger)
-    {
-        $this->kpiTriggers->removeElement($kpiTrigger);
-    }
-
-    public function getKpiTriggers()
-    {
-        return $this->kpiCaptures;
-    }
-
-    /**
-     * add userModule
-     * remove userModule
-     * get userModules
-     *
-     * @param UserModule $userModule
-     *
-     * @return User
-     */
-    public function addUserModule(UserModule $userModule)
-    {
-        $this->userModules[] = $userModule;
-
-        return $this;
-    }
-
-    public function removeUserModule(UserModule $userModule)
-    {
-        $this->userModules->removeElement($userModule);
-    }
-
-    public function getUserModules()
-    {
-        return $this->userModules;
     }
 
     /**

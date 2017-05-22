@@ -7,117 +7,12 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
-    admin.campaign:
-        class: AppBundle\Admin\CampaignAdmin
-        arguments: [~, AppBundle\Entity\Campaign, ~]
-        tags:
-            - { name: sonata.admin, group: "Campaigns", manager_type: orm, label: table_Campaign }
-
-    admin.recipient:
-        class: AppBundle\Admin\RecipientAdmin
-        arguments: [~, AppBundle\Entity\Recipient, ~]
-        tags:
-            - { name: sonata.admin, group: "Campaigns", manager_type: orm, label: table_Recipient }
-
-    admin.link:
-        class: AppBundle\Admin\LinkAdmin
-        arguments: [~, AppBundle\Entity\Link, ~]
-        tags:
-            - { name: sonata.admin, group: "Tracking", manager_type: orm, label: table_Link }
-
-    admin.tracking:
-        class: AppBundle\Admin\TrackingAdmin
-        arguments: [~, AppBundle\Entity\Tracking, ~]
-        tags:
-            - { name: sonata.admin, group: "Tracking", manager_type: orm, label: table_Tracking }
-
-    admin.data.recipient:
-        class: AppBundle\Admin\DataRecipientAdmin
-        arguments: [~, AppBundle\Entity\DataRecipient, ~]
-        tags:
-            - { name: sonata.admin, group: "Campaigns", manager_type: orm, label: table_Data_Recipient }
-
-    admin.client:
-        class: AppBundle\Admin\ClientAdmin
-        arguments: [~, AppBundle\Entity\Client, ~]
-        tags:
-            - { name: sonata.admin, group: "Clients", manager_type: orm, label: 'table_Client' }
-
-    admin.dateImport:
-        class: AppBundle\Admin\DateImportAdmin
-        arguments: [~, AppBundle\Entity\DateImport, ~]
-        tags:
-            - { name: sonata.admin, group: "Imports", manager_type: orm, label: 'table_Import' }
-
-    cron.import.recipient:
-        class: AppBundle\Service\ImportRecipientCronService
-        arguments:
-            - %local_ip%
-            - @service_container
-
-    cron.import.doublon.suspect:
-        class: AppBundle\Service\ImportDoublonSuspectCronService
-        arguments:
-            - %local_ip%
-            - @service_container
-
-    cron.import.top.client:
-        class: AppBundle\Service\ImportTopClientCronService
-        arguments:
-            - %local_ip%
-            - @service_container
-
-    cron.import.lignes.vente:
-        class: AppBundle\Service\LignesVenteCronService
-        arguments:
-            - %local_ip%
-            - @service_container
-
-    cron.export.recipient:
-        class: AppBundle\Service\ExportRecipientCronService
-        arguments:
-            - %local_ip%
-            - @service_container
-
-    cron.update.links:
-        class: AppBundle\Service\UpdateLinksTrackingService
-        arguments:
-            - %local_ip%
-            - @service_container
-
-    cron.update.tracking:
-        class: AppBundle\Service\UpdateTrackingService
-        arguments:
-            - %local_ip%
-            - @service_container
-
-    cron.update.bounce:
-        class: AppBundle\Service\ExportBouncesCronService
-        arguments:
-            - %local_ip%
-            - @service_container
-            - @doctrine.orm.default_entity_manager
-            - @doctrine.orm.tracking_entity_manager
-
-    cron.import.kpi:
-        class: AppBundle\Service\ImportKpiCronService
-        arguments:
-            - %local_ip%
-            - @service_container
-
-    cron.delete.daily:
-        class: AppBundle\Service\DeleteClientDailyCronService
-        arguments: [ @doctrine.orm.default_entity_manager ]
 
     cron.send_password_email:
         class: AppBundle\Service\PasswordEmailCronService
         arguments:
             - @doctrine.orm.default_entity_manager
             - @service_container
-
-    import.file.log:
-        class: AppBundle\Service\ImportFileLogService
-        arguments: [ @doctrine.orm.default_entity_manager ]
 
     login.security.authentication_failure_event_listener:
         class: AppBundle\Service\AuthenticationListener
@@ -131,30 +26,12 @@ services:
         tags:
             - { name: kernel.event_listener, event: security.interactive_login, method: onAuthenticationSuccess }
 
-    app.get_user_modules:
-        class: AppBundle\Service\GetUserModulesService
-        arguments: [ @doctrine.orm.default_entity_manager ]
-
-    app.set_email_footer:
-        class: AppBundle\Service\SetEmailFooterService
-
     app.twig_extension:
         class: AppBundle\Service\TwigExtensionService
         public: false
-        arguments: [ @doctrine.orm.default_entity_manager, @app.get_user_modules ]
+        arguments: [ @doctrine.orm.default_entity_manager]
         tags:
             - { name: twig.extension }
-
-    app.email_set_default_datas:
-        class: AppBundle\Service\EmailDefaultDatasService
-        arguments: [ @service_container ]
-
-    app.is_authorized_client:
-        class: AppBundle\Service\IsAuthorizedService
-        arguments: [ @doctrine.orm.default_entity_manager ]
-
-    app.init_Kpi_dates:
-        class: AppBundle\Service\initKpiFilterDatesService
 
     app.mailchimp:
         class: AppBundle\Service\MailChimpService
@@ -182,9 +59,3 @@ services:
     app.pdo_connect:
         class: AppBundle\Service\PdoService
         arguments: [ @service_container ]
-
-    app.client_filter:
-        class: AppBundle\Service\ClientFilterService
-        arguments:
-            - @service_container
-            - @doctrine.orm.default_entity_manager

@@ -2,13 +2,6 @@
 
 {% extends "::layout.html.twig" %}
 
-{% block title %}
-  Clienteling - LANCEL PARIS
-{% endblock %}
-
-{% block imgNav %}
-	<a href="{{ path('app_home') }}"><img style="display:block; float:left;padding-right:20px;" src="{{ asset('web/images/logolancel.png') }}" alt="logo" height="50" /></a>
-{% endblock %}
 
 {#% block LpTopTitle %}
     {% if is_granted("IS_AUTHENTICATED_ANONYMOUSLY") %}

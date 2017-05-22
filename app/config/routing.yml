@@ -1,6 +1,3 @@
-app_tracking:
-    resource: "@AppTrackingBundle/Resources/config/routing.yml"
-    prefix:   /
 
 application_sonata_helper:
     resource: "@ApplicationSonataHelperBundle/Controller/"
@@ -44,7 +41,3 @@ sonata_user_change_password:
 sonata_user_admin_security:
     resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
     prefix: /admin
-
-sonata_import_CSV:
-    path: /admin/csv/import
-    defaults:  { _controller: ApplicationSonataHelperBundle:CSV:importFile }

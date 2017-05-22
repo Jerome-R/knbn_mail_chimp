@@ -104,14 +104,6 @@ doctrine:
                 user:     "%database_user%"
                 password: "%database_password%"
                 charset:  UTF8
-            tracking:
-                driver:   pdo_mysql
-                host:     "%database_tracking_host%"
-                port:     "%database_tracking_port%"
-                dbname:   "%database_tracking_name%"
-                user:     "%database_tracking_user%"
-                password: "%database_tracking_password%"
-                charset:  UTF8
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
@@ -132,11 +124,6 @@ doctrine:
                 dql:
                     string_functions:
                         GROUP_CONCAT: AppBundle\Doctrine\Mysql\GroupConcat
-            tracking:
-                naming_strategy: doctrine.orm.naming_strategy.underscore
-                connection: tracking
-                mappings:
-                    AppTrackingBundle: ~
 
 # Swiftmailer Configuration
 swiftmailer:

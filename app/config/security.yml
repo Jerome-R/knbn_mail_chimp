@@ -68,9 +68,17 @@ security:
     access_control:
         # URL of FOSUserBundle which need to be available to anonymous users
         #- { path: ^/.*, requires_channel: http }
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http }
+        - { path: ^/register, role: ROLE_ADMIN , requires_channel: http }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http }
+
+        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http }
+        - { path: ^/admin/register, role: ROLE_ADMIN , requires_channel: http }
+        - { path: ^/admin/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http }
 
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin role for the admin part.
         # Change these rules to adapt them to your needs
         - { path: ^/admin/, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN], requires_channel: http }
+        - { path: ^/login/, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN], requires_channel: http }
         - { path: ^/.*, role: ROLE_ADMIN, requires_channel: http }

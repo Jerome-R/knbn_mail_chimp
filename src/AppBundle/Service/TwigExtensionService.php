@@ -11,10 +11,9 @@ class TwigExtensionService extends \Twig_Extension
     private $em;
     private $service;
 
-	public function __construct(EntityManager $entityManager, GetUserModulesService $getUserModules)
+	public function __construct(EntityManager $entityManager)
 	{
 		$this->em 		= $entityManager;
-		$this->service 	= $getUserModules;
 	}
 
     public function getName()
@@ -35,12 +34,6 @@ class TwigExtensionService extends \Twig_Extension
           'unsuscribeLink'  => new \Twig_Function_Method($this, 'unsuscribeLink'),
         );
     }
-
-	//Get modules Campaigns/Kpis/TopClients for Menu
-	public function GetModules(User $user)
-	{
-        return $this->service->GetUserModules($user);
-	}
 
     public function roundLetter($value){
         if ($value > 999 && $value <= 999999) {
